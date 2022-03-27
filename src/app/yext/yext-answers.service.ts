@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { provideCore, Filter } from '@yext/answers-core';
-import { from } from 'rxjs';
+import { from, map, mergeMap, Observable, pluck, toArray } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,8 +16,14 @@ export class YextAnswersService {
 
   constructor() { }
 
-  universalAutocomplete(input: string){
-    return from(this.core.universalAutocomplete({ input }));
+  universalAutocomplete(input: string): Observable<string[]>{
+    return from(this.core.universalAutocomplete({ input }))
+      .pipe(
+        map(resp => resp.results),
+        mergeMap(resp => resp),
+        pluck('value'),
+        toArray()
+      );
   }
 
   universalSearch(query: string){
@@ -25,7 +31,13 @@ export class YextAnswersService {
   }
 
   verticalAutocomplete(input: string, verticalKey: string){
-    return from(this.core.verticalAutocomplete({ input, verticalKey}));
+    return from(this.core.verticalAutocomplete({ input, verticalKey}))
+    .pipe(
+      map(resp => resp.results),
+      mergeMap(resp => resp),
+      pluck('value'),
+      toArray()
+    );
   }
 
   verticalSearch(query: string, verticalKey: string, filter: Filter){

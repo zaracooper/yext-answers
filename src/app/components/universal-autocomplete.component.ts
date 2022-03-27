@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { map, Observable, startWith } from 'rxjs';
+import { debounceTime, distinctUntilChanged, iif, Observable, of, switchMap } from 'rxjs';
+import { YextAnswersService } from '../yext/yext-answers.service';
 
 @Component({
   selector: 'app-universal-autocomplete',
   template: `
     <div class="cnt">
-      <hr>
       <h1>Universal Autocomplete</h1>
       <form>
         <mat-form-field appearance="fill">
@@ -18,8 +18,8 @@ import { map, Observable, startWith } from 'rxjs';
                 [formControl]="acInput"
                 [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option}}
+            <mat-option *ngFor="let result of acResults | async" [value]="result">
+              {{result}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
@@ -27,25 +27,30 @@ import { map, Observable, startWith } from 'rxjs';
     </div>
   `,
   styles: [
-    `hr { width: 10vw; }`,
     `mat-form-field { width: 40vw; }`
   ]
 })
 export class UniversalAutocompleteComponent implements OnInit {
   acInput = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions!: Observable<string[]>;
+  acResults!: Observable<string[]>;
+  
+  constructor(private yextAnswers: YextAnswersService){}
 
   ngOnInit() {
-    this.filteredOptions = this.acInput.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value)),
-    );
-  }
+    this.acResults = this.acInput.valueChanges.pipe(
+      switchMap(input => {
+        input = input.trim();
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+        return iif(
+          () => input !== null && input.length >= 3,
+          of(input).pipe(
+            distinctUntilChanged(),
+            debounceTime(1000),
+            switchMap(input => this.yextAnswers.universalAutocomplete(input))
+          ),
+          of(input == '' ? [] : ['Searching...'])
+        );
+      }));
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 }
