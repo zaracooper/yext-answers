@@ -4,10 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UniversalAutocompleteComponent } from './universal-autocomplete/universal-autocomplete.component';
-import { UniversalQueryComponent } from './universal-query/universal-query.component';
-import { VerticalAutocompleteComponent } from './vertical-autocomplete/vertical-autocomplete.component';
-import { VerticalQueryComponent } from './vertical-query/vertical-query.component';
+import { UniversalAutocompleteComponent } from './components/universal-autocomplete.component';
+import { UniversalQueryComponent } from './components/universal-query.component';
+import { VerticalAutocompleteComponent } from './components/vertical-autocomplete.component';
+import { VerticalQueryComponent } from './components/vertical-query.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './components/home.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +21,18 @@ import { VerticalQueryComponent } from './vertical-query/vertical-query.componen
     UniversalAutocompleteComponent,
     UniversalQueryComponent,
     VerticalAutocompleteComponent,
-    VerticalQueryComponent
+    VerticalQueryComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
