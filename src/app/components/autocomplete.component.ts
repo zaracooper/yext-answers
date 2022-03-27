@@ -7,7 +7,7 @@ import { YextAnswersService } from '../yext/yext-answers.service';
   selector: 'app-autocomplete',
   template: `
     <div class="cnt">
-      <h1 class="mat-display-1">{{ title | titlecase } }} Autocomplete</h1>
+      <h1 class="mat-display-1">{{ title | titlecase }} Autocomplete</h1>
       <form>
         <mat-form-field appearance="fill">
           <mat-label>Input</mat-label>
@@ -31,7 +31,7 @@ import { YextAnswersService } from '../yext/yext-answers.service';
   ]
 })
 export class AutocompleteComponent implements OnInit {
-  @Input() vertical = '';
+  @Input() vertical?= '';
   acInput = new FormControl();
   acResults!: Observable<string[]>;
   title = '';
@@ -39,7 +39,7 @@ export class AutocompleteComponent implements OnInit {
   constructor(private yextAnswers: YextAnswersService) { }
 
   ngOnInit() {
-    this.vertical = this.vertical.trim();
+    this.vertical = this.vertical ? this.vertical.trim() : '';
 
     const [validResults, invalidResults] = partition(
       this.acInput.valueChanges.pipe(map(input => input ? input.trim() : input)),
@@ -52,8 +52,8 @@ export class AutocompleteComponent implements OnInit {
         debounceTime(1000),
         switchMap(input =>
           iif(
-            () => this.vertical.length > 0,
-            this.yextAnswers.verticalAutocomplete(input, this.vertical),
+            () => this.vertical ? this.vertical.length > 0 : false,
+            this.yextAnswers.verticalAutocomplete(input, this.vertical || 'drinks'),
             this.yextAnswers.universalAutocomplete(input)
           )
         )
