@@ -16,7 +16,7 @@ export class YextAnswersService {
 
   constructor() { }
 
-  universalAutocomplete(input: string): Observable<string[]>{
+  universalAutocomplete(input: string): Observable<string[]> {
     return from(this.core.universalAutocomplete({ input }))
       .pipe(
         map(resp => resp.results),
@@ -26,21 +26,33 @@ export class YextAnswersService {
       );
   }
 
-  universalSearch(query: string){
+  universalSearch(query: string) {
     return from(this.core.universalSearch({ query }));
   }
 
-  verticalAutocomplete(input: string, verticalKey: string){
-    return from(this.core.verticalAutocomplete({ input, verticalKey}))
-    .pipe(
-      map(resp => resp.results),
-      mergeMap(resp => resp),
-      pluck('value'),
-      toArray()
-    );
+  verticalAutocomplete(input: string, verticalKey: string) {
+    return from(this.core.verticalAutocomplete({ input, verticalKey }))
+      .pipe(
+        map(resp => resp.results),
+        mergeMap(resp => resp),
+        pluck('value'),
+        toArray()
+      );
   }
 
-  verticalSearch(query: string, verticalKey: string, filter: Filter){
-    return from(this.core.verticalSearch({ query, verticalKey }));
+  verticalSearch(query: string, verticalKey: string, filter?: Filter) {
+    let queryParams: Filter = { query, verticalKey };
+
+    if (filter) {
+      queryParams.staticFilter'] = filter;
+    }
+
+    return from(this.core.verticalSearch())
+      .pipe(
+        map(resp => resp.verticalResults.results),
+        mergeMap(resp => resp),
+        pluck('rawData'),
+        toArray()
+      );
   }
 }
