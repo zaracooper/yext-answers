@@ -12,7 +12,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './pages/home.component';
 
@@ -33,7 +33,7 @@ import { HomeComponent } from './pages/home.component';
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
-    MatListModule,
+    MatCardModule,
     ReactiveFormsModule
   ],
   providers: [],

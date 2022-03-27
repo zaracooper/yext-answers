@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { provideCore, Filter } from '@yext/answers-core';
+import { provideCore, Filter, VerticalSearchRequest } from '@yext/answers-core';
 import { from, map, mergeMap, Observable, pluck, toArray } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -41,13 +41,13 @@ export class YextAnswersService {
   }
 
   verticalSearch(query: string, verticalKey: string, filter?: Filter) {
-    let queryParams: Filter = { query, verticalKey };
+    let queryReq: VerticalSearchRequest = { query, verticalKey };
 
     if (filter) {
-      queryParams.staticFilter'] = filter;
+      queryReq.staticFilters = filter;
     }
 
-    return from(this.core.verticalSearch())
+    return from(this.core.verticalSearch(queryReq))
       .pipe(
         map(resp => resp.verticalResults.results),
         mergeMap(resp => resp),

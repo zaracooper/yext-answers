@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, iif, Observable, of, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, merge, Observable, partition, switchMap } from 'rxjs';
+
 import { YextAnswersService } from '../yext/yext-answers.service';
 
 @Component({
@@ -37,20 +38,20 @@ export class UniversalAutocompleteComponent implements OnInit {
   constructor(private yextAnswers: YextAnswersService) { }
 
   ngOnInit() {
-    this.acResults = this.acInput.valueChanges.pipe(
-      switchMap(input => {
-        input = input.trim();
+    const [validResults, invalidResults] = partition(
+      this.acInput.valueChanges.pipe(map(input => input ? input.trim() : input)),
+      (input: string) => input !== '' && input !== null && input.length >= 3
+    );
 
-        return iif(
-          () => input !== null && input.length >= 3,
-          of(input).pipe(
-            distinctUntilChanged(),
-            debounceTime(1000),
-            switchMap(input => this.yextAnswers.universalAutocomplete(input))
-          ),
-          of(input == '' ? [] : ['Searching...'])
-        );
-      }));
-
+    this.acResults = merge(
+      validResults.pipe(
+        distinctUntilChanged(),
+        debounceTime(1000),
+        switchMap(input => this.yextAnswers.universalAutocomplete(input))
+      ),
+      invalidResults.pipe(
+        map(input => [])
+      )
+    );
   }
 }
