@@ -33,8 +33,8 @@ import { YextAnswersService } from '../yext/yext-answers.service';
 export class UniversalAutocompleteComponent implements OnInit {
   acInput = new FormControl();
   acResults!: Observable<string[]>;
-  
-  constructor(private yextAnswers: YextAnswersService){}
+
+  constructor(private yextAnswers: YextAnswersService) { }
 
   ngOnInit() {
     this.acResults = this.acInput.valueChanges.pipe(

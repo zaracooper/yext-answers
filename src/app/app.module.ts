@@ -4,16 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UniversalAutocompleteComponent } from './components/universal-autocomplete.component';
-import { UniversalQueryComponent } from './components/universal-query.component';
-import { VerticalAutocompleteComponent } from './components/vertical-autocomplete.component';
-import { VerticalQueryComponent } from './components/vertical-query.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { UniversalAutocompleteComponent } from './pages/universal-autocomplete.component';
+import { UniversalQueryComponent } from './pages/universal-query.component';
+import { VerticalAutocompleteComponent } from './pages/vertical-autocomplete.component';
+import { VerticalQueryComponent } from './pages/vertical-query.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './components/home.component';
+import { HomeComponent } from './pages/home.component';
 
 @NgModule({
   declarations: [

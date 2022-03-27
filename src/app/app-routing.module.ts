@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home.component';
-import { UniversalAutocompleteComponent } from './components/universal-autocomplete.component';
-import { UniversalQueryComponent } from './components/universal-query.component';
-import { VerticalAutocompleteComponent } from './components/vertical-autocomplete.component';
-import { VerticalQueryComponent } from './components/vertical-query.component';
+import { HomeComponent } from './pages/home.component';
+import { UniversalAutocompleteComponent } from './pages/universal-autocomplete.component';
+import { UniversalQueryComponent } from './pages/universal-query.component';
+import { VerticalAutocompleteComponent } from './pages/vertical-autocomplete.component';
+import { VerticalQueryComponent } from './pages/vertical-query.component';
 
 const routes: Routes = [
   { path: 'universal-autocomplete', component: UniversalAutocompleteComponent },
