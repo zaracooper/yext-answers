@@ -12,14 +12,16 @@ import { VerticalAutocompleteComponent } from './pages/vertical-autocomplete.com
 import { VerticalQueryComponent } from './pages/vertical-query.component';
 import { HomeComponent } from './pages/home.component';
 
+import { QueryComponent } from './components/query.component';
+import { AutocompleteComponent } from './components/autocomplete.component';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { AutocompleteComponent } from './components/autocomplete.component';
-import { QueryComponent } from './components/query.component';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 
 
@@ -44,6 +46,7 @@ import { QueryComponent } from './components/query.component';
     MatInputModule,
     MatCardModule,
     MatCheckboxModule,
+    MatIconModule,
     ReactiveFormsModule,
     FormsModule
   ],
