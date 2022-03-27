@@ -12,9 +12,9 @@ import { YextAnswersService } from '../yext/yext-answers.service';
       <form class="cnt">
         <mat-form-field appearance="fill">
           <mat-label>Query</mat-label>
-          <input matInput placeholder="Enter your query" [formControl]="query" aria-label="Query">
+          <input matInput name="query" placeholder="Enter your query" [formControl]="query" aria-label="Query">
         </mat-form-field>
-        <mat-checkbox [(ngModel)]="matchName">Match Name Exactly</mat-checkbox>
+        <mat-checkbox [formControl]="matchName">Match Name Exactly</mat-checkbox>
         <button (click)="makeQuery()" [disabled]="query.invalid" mat-flat-button color="accent" type="button">Search "Drinks" Vertical</button>
       </form>
       <div id="results" class="cnt">
@@ -40,7 +40,7 @@ export class VerticalQueryComponent {
   query = new FormControl('', Validators.required);
   drinks!: Observable<Record<string, unknown>[]>;
   disableButton = false;
-  matchName = false;
+  matchName = new FormControl(false);
 
   constructor(private yextAnswers: YextAnswersService) { }
 
@@ -51,7 +51,7 @@ export class VerticalQueryComponent {
     this.drinks = this.yextAnswers.verticalSearch(
       String(queryValue),
       'drinks',
-      this.matchName ? { fieldId: 'name', matcher: Matcher.Equals, value: queryValue } : undefined
+      this.matchName.value ? { fieldId: 'name', matcher: Matcher.Equals, value: queryValue } : undefined
     ).pipe(
       tap(() => this.disableButton = false),
       map(res => res || [{ 'Result': 'No results' }])
