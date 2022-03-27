@@ -4,13 +4,13 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <div class="cnt">
-      <h1 class="mat-display-2">Yext Answers API Demo</h1>
+      <h1 class="mat-display-2" routerLink="/">Yext Answers Core API Demo</h1>
       <hr>
       <router-outlet></router-outlet>
     </div>
   `,
   styles: [
-    `hr { width: 10vw; margin: 2em 0; }`,
+    `hr { width: 10vw; margin-bottom: 2em; }`,
     `div.cnt { padding-top: 5em; }`,
     `h1 { margin-bottom: .2em !important; }`
   ]
