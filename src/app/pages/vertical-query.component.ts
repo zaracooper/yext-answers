@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Matcher } from '@yext/answers-core';
 import { map, Observable, tap } from 'rxjs';
 import { YextAnswersService } from '../yext/yext-answers.service';
 
@@ -7,16 +8,17 @@ import { YextAnswersService } from '../yext/yext-answers.service';
   selector: 'app-vertical-query',
   template: `
     <div class="cnt">
-      <h1>"Drinks" Vertical Query</h1>
+      <h1 class="mat-display-1">"Drinks" Vertical Query</h1>
       <form class="cnt">
         <mat-form-field appearance="fill">
           <mat-label>Query</mat-label>
           <input matInput placeholder="Enter your query" [formControl]="query" aria-label="Query">
         </mat-form-field>
+        <mat-checkbox [(ngModel)]="matchName">Match Name Exactly</mat-checkbox>
         <button (click)="makeQuery()" [disabled]="query.invalid" mat-flat-button color="accent" type="button">Search "Drinks" Vertical</button>
       </form>
       <div id="results" class="cnt">
-        <h1>Results</h1>
+        <h1 class="mat-display-1">Results</h1>
         <mat-card *ngFor="let drink of drinks | async">
           <p  *ngFor="let item of formatFields(drink) | keyvalue">
             <span class="field mat-accent">{{item.key}}:</span> 
@@ -30,23 +32,26 @@ import { YextAnswersService } from '../yext/yext-answers.service';
     `mat-form-field { width: 40vw; }`,
     `#results { margin: 2em; display: flex;}`,
     `.field { font-weight: bold; }`,
-    `mat-card { width: 30vw; margin: 1em; }`
+    `mat-card { width: 30vw; margin: 1em; }`,
+    `mat-checkbox {margin: 1em; }`
   ]
 })
 export class VerticalQueryComponent {
   query = new FormControl('', Validators.required);
   drinks!: Observable<Record<string, unknown>[]>;
   disableButton = false;
+  matchName = false;
 
   constructor(private yextAnswers: YextAnswersService) { }
 
   makeQuery() {
     this.disableButton = true;
+    const queryValue = String(this.query.value);
 
     this.drinks = this.yextAnswers.verticalSearch(
-      String(this.query.value),
-      'drinks'
-      // { fieldId: 'name', matcher: Matcher.Equals, value: 'Vodka Martini' }
+      String(queryValue),
+      'drinks',
+      this.matchName ? { fieldId: 'name', matcher: Matcher.Equals, value: queryValue } : undefined
     ).pipe(
       tap(() => this.disableButton = false),
       map(res => res || [{ 'Result': 'No results' }])

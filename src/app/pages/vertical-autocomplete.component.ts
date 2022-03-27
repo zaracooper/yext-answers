@@ -7,7 +7,7 @@ import { YextAnswersService } from '../yext/yext-answers.service';
   selector: 'app-vertical-autocomplete',
   template: `
     <div class="cnt">
-      <h1>"Drinks" Vertical Autocomplete</h1>
+      <h1 class="mat-display-1">"Drinks" Vertical Autocomplete</h1>
       <form>
         <mat-form-field appearance="fill">
           <mat-label>Input</mat-label>

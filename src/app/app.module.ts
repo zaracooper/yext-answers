@@ -1,20 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { UniversalAutocompleteComponent } from './pages/universal-autocomplete.component';
 import { UniversalQueryComponent } from './pages/universal-query.component';
 import { VerticalAutocompleteComponent } from './pages/vertical-autocomplete.component';
 import { VerticalQueryComponent } from './pages/vertical-query.component';
+import { HomeComponent } from './pages/home.component';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './pages/home.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
+
 
 @NgModule({
   declarations: [
@@ -34,7 +39,9 @@ import { HomeComponent } from './pages/home.component';
     MatButtonModule,
     MatInputModule,
     MatCardModule,
-    ReactiveFormsModule
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
