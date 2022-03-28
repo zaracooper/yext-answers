@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { provideCore, Filter, VerticalSearchRequest } from '@yext/answers-core';
-import { from, map, mergeMap, Observable, pluck, tap, toArray } from 'rxjs';
+import { from, map, mergeMap, Observable, pluck, toArray } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
