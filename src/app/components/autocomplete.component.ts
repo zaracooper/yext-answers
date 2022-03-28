@@ -41,13 +41,13 @@ export class AutocompleteComponent implements OnInit {
   ngOnInit() {
     this.vertical = this.vertical ? this.vertical.trim() : '';
 
-    const [validResults, invalidResults] = partition(
+    const [validValues, invalidValues] = partition(
       this.acInput.valueChanges.pipe(map(input => input ? input.trim() : input)),
       (input: string) => input !== '' && input !== null && input.length >= 3
     );
 
     this.acResults = merge(
-      validResults.pipe(
+      validValues.pipe(
         distinctUntilChanged(),
         debounceTime(1000),
         switchMap(input =>
@@ -58,7 +58,7 @@ export class AutocompleteComponent implements OnInit {
           )
         )
       ),
-      invalidResults.pipe(
+      invalidValues.pipe(
         map(input => [])
       )
     );

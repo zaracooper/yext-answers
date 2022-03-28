@@ -22,7 +22,7 @@ import { YextAnswersService } from '../yext/yext-answers.service';
           <h1 class="mat-display-1">{{ resultVertical['verticalKey'] | titlecase }} Results</h1>
           <div id="resultCards">
             <mat-card *ngFor="let resultItem of resultVertical['results']">
-              <p  *ngFor="let item of formatFields(resultItem) | keyvalue">
+              <p  *ngFor="let item of filterFields(resultItem) | keyvalue">
                 <span class="field mat-accent">{{item.key | uppercase}}:</span> 
                 {{ item.value }}
               </p>
@@ -34,7 +34,7 @@ import { YextAnswersService } from '../yext/yext-answers.service';
         <h1 class="mat-display-1">Results</h1>
         <div id="resultCards">
           <mat-card *ngFor="let drink of results | async">
-            <p  *ngFor="let item of formatFields(drink) | keyvalue">
+            <p  *ngFor="let item of filterFields(drink) | keyvalue">
               <span class="field mat-accent">{{item.key}}:</span> 
               {{ item.value }}
             </p>
@@ -98,7 +98,7 @@ export class QueryComponent implements OnInit {
     );
   }
 
-  formatFields(value: any) {
+  filterFields(value: any) {
     return Object.keys(value)
       .filter(key => typeof value[key] == 'string')
       .reduce((filteredObj: { [key: string]: string; }, key) => {

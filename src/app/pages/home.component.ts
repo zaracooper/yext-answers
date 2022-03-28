@@ -1,24 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   template: `
     <div class="cnt">
-      <button mat-raised-button class="mat-display-1" routerLink="/universal-autocomplete">
-        <mat-icon class="button-icon">speaker_notes</mat-icon>
-        Universal Autocomplete
-      </button>
-      <button mat-raised-button color="primary" class="mat-display-1" routerLink="/universal-query">
-        <mat-icon class="button-icon">travel_explore</mat-icon>
-        Universal Query
-      </button>
-      <button mat-raised-button color="accent" class="mat-display-1" routerLink="/vertical-autocomplete">
-        <mat-icon class="button-icon">textsms</mat-icon>
-        Vertical Autocomplete
-      </button>
-      <button mat-raised-button color="warn" class="mat-display-1" routerLink="/vertical-query">
-        <mat-icon class="button-icon">find_in_page</mat-icon>
-        Vertical Query
+      <button *ngFor="let btn of buttons" mat-raised-button [color]="btn.color" class="mat-display-1" [routerLink]="btn.link">
+        <mat-icon class="button-icon">{{btn.icon}}</mat-icon>
+        {{btn.text}}
       </button>
     </div>
   `,
@@ -34,11 +22,11 @@ import { Component, OnInit } from '@angular/core';
     }`
   ]
 })
-export class HomeComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class HomeComponent {
+  buttons = [
+    { color: '', link: '/universal-autocomplete', icon: 'speaker_notes', text: 'Universal Autocomplete' },
+    { color: 'primary', link: '/universal-query', icon: 'travel_explore', text: 'Universal Query' },
+    { color: 'accent', link: '/vertical-autocomplete', icon: 'textsms', text: 'Vertical Autocomplete' },
+    { color: 'warn', link: '/vertical-query', icon: 'find_in_page', text: 'Vertical Query' },
+  ];
 }
